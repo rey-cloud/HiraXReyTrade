@@ -9,4 +9,5 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::post('/pets', [PetController::class, 'store']);
+Route::get('/pets', [PetController::class, 'index']);
 Route::get('/pets/{id}', [PetController::class, 'show']);

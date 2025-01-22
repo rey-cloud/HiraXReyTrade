@@ -9,6 +9,16 @@ use App\Http\Requests\StorePetRequest;
 
 class PetController extends Controller
 {
+    public function index()
+    {
+        $pets = Pet::with('petValues')->get();
+
+        if ($pets->isEmpty()) {
+            return response()->json(['message' => 'No pets found.'], 404);
+        }
+
+        return response()->json($pets);
+    }
     /**
      * Store a new pet and its values.
      */

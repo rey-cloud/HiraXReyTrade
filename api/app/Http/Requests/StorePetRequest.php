@@ -21,7 +21,7 @@ class StorePetRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'image_url' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image_url' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'values' => 'required|json', // Ensure `values` is a valid JSON string
         ];
     }

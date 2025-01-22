@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('pet_id'); // Foreign key for pets
             $table->enum('type', ['normal', 'neon', 'mega']); // Type of pet
             $table->enum('attribute', ['no_potion', 'fly', 'ride', 'fly_ride']); // Attribute
-            $table->integer('value'); // Value for this attribute
+            $table->decimal('value', 8, 2); // Decimal value with precision and scale
             $table->integer('clicks')->default(0); // Number of clicks, default to 0
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->nullable(); // Optional: Add this if you want to track updates but set it manually
