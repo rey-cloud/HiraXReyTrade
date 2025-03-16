@@ -1,4 +1,6 @@
+import { useState } from "react";
 import close from "../assets/images/close.png";
+import Attributes from "./Buttons/Attributes";
 
 const PetSelectionModal = ({
   modal,
@@ -7,8 +9,38 @@ const PetSelectionModal = ({
   selectedPets,
   setSelectedPets,
 }) => {
+  const [Fly, setFly] = useState(false);
+  const [Ride, setRide] = useState(false);
+  const [Normal, setNormal] = useState(true);
+  const [Neon, setNeon] = useState(false);
+  const [Mega, setMega] = useState(false);
+
+  const handleToggle = (type) => {
+    if (type === "Normal") {
+      setNormal(true);
+      setNeon(false);
+      setMega(false);
+    } else if (type === "Neon") {
+      setNeon(true);
+      setNormal(false);
+      setMega(false);
+    } else if (type === "Mega") {
+      setMega(true);
+      setNormal(false);
+      setNeon(false);
+    }
+  };
+
   const PetClicked = (pet) => {
-    const uniquePet = { ...pet, uniqueid: selectedPets.length + 1 }; // Add unique ID
+    const uniquePet = {
+      ...pet,
+      Fly,
+      Ride,
+      Normal,
+      Neon,
+      Mega,
+      uniqueid: selectedPets.length + 1,
+    };
     setSelectedPets((prevPets) => [...prevPets, uniquePet]);
   };
 
@@ -64,21 +96,36 @@ const PetSelectionModal = ({
 
           {/* Buttons */}
           <div className="mt-6 flex flex-wrap gap-2 justify-center">
-            <button className="px-4 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600">
-              Fly
-            </button>
-            <button className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600">
-              Ride
-            </button>
-            <button className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600">
-              Normal
-            </button>
-            <button className="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600">
-              Neon
-            </button>
-            <button className="px-4 py-2 bg-pink-500 text-white rounded-md hover:bg-pink-600">
-              Mega
-            </button>
+            <Attributes
+              name={"Fly"}
+              color={"bg-[#158eca]"}
+              toggle={Fly}
+              setToggle={setFly}
+            />
+            <Attributes
+              name={"Ride"}
+              color={"bg-[#f6146d]"}
+              toggle={Ride}
+              setToggle={setRide}
+            />
+            <Attributes
+              name={"Normal"}
+              color={"bg-[#ff6766]"}
+              toggle={Normal}
+              setToggle={() => handleToggle("Normal")}
+            />
+            <Attributes
+              name={"Neon"}
+              color={"bg-[#439c25]"}
+              toggle={Neon}
+              setToggle={() => handleToggle("Neon")}
+            />
+            <Attributes
+              name={"Mega"}
+              color={"bg-[#4d12bd]"}
+              toggle={Mega}
+              setToggle={() => handleToggle("Mega")}
+            />
           </div>
         </div>
       </div>

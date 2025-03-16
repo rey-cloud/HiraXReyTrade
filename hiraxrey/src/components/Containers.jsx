@@ -10,6 +10,7 @@ const Containers = (pets) => {
   const [modal, setModal] = useState(false);
   const [selectedPets, setSelectedPets] = useState([]);
   useEffect(() => {
+    console.log("selected pets:", selectedPets);
     if (selectedPets.length < 10 && selectedPets.length > 8) {
       setGridNums(12);
     } else if (selectedPets.length < 9) {
