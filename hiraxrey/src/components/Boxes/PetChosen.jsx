@@ -3,10 +3,10 @@ import Mega from "../../assets/images/Mega.png";
 import Ride from "../../assets/images/Ride.png";
 import Neon from "../../assets/images/Neon.png";
 
-const PetChosen = ({ selectedPet, setSelectedPets }) => {
+const PetChosen = ({ selectedPet, setSelectedPets, value, setValue }) => {
   // Define the function to remove a pet
   const removePet = (petToRemove) => {
-    console.log("this is your selectedPet", selectedPet.Fly);
+    setValue(value - petToRemove.petValue)
     setSelectedPets((prevPets) =>
       prevPets.filter((pet) => pet.uniqueid !== petToRemove.uniqueid)
     );

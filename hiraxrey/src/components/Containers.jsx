@@ -5,10 +5,18 @@ import Plus from "./Boxes/Plus";
 import Empty from "./Boxes/Empty";
 import PetChosen from "./Boxes/PetChosen";
 
-const Containers = (pets) => {
+const Containers = ({pets, setResultValue}) => {
+
+  const [value, setValue] = useState(0);
   const [gridNum, setGridNums] = useState(9);
   const [modal, setModal] = useState(false);
   const [selectedPets, setSelectedPets] = useState([]);
+  
+  useEffect(() => {
+    setResultValue(value);
+  }, [value]); 
+  
+
   useEffect(() => {
     console.log("selected pets:", selectedPets);
     if (selectedPets.length < 10 && selectedPets.length > 8) {
@@ -31,7 +39,7 @@ const Containers = (pets) => {
   return (
     <>
       <div className="flex flex-col items-center w-[40%] ">
-        <div className="text-center text-3xl font-bold mb-2">0</div>
+        <div className="text-center text-3xl font-bold mb-2">{value}</div>
         <div className="w-full h-60 grid grid-cols-3 overflow-y-auto overflow-x-hidden gap-1 custom-scrollbar">
           {Array.from({ length: gridNum }).map((_, index) =>
             index < selectedPets.length ? (
@@ -39,6 +47,8 @@ const Containers = (pets) => {
                 key={index}
                 selectedPet={selectedPets[index]}
                 setSelectedPets={setSelectedPets}
+                value={value}
+                setValue={setValue}
               />
             ) : index === selectedPets.length ? (
               <Plus key="plus-button" setModal={setModal} />
@@ -54,6 +64,8 @@ const Containers = (pets) => {
         pets={pets}
         selectedPets={selectedPets}
         setSelectedPets={setSelectedPets}
+        value={value}
+        setValue={setValue}
       />
     </>
   );

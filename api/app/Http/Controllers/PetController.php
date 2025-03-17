@@ -74,15 +74,9 @@ class PetController extends Controller
 
     public function getValue(Request $request, $id)
     {
-        $pet = Pet::with(['petValues' => function ($query) use ($request) {
-            $query->where('type', $request->type)
-                ->where('attribute', $request->attribute);
-        }])->where('id', $id)->first();
 
-        if (!$pet) {
-            return response()->json(['message' => 'Pet not found'], 404);
-        }
+        $pet_value = PetValue::with('pet')->where('type', $request->type)->where('attribute', $request->attribute)->first();
 
-        return response()->json(['Pet' => $pet]);
+        return $pet_value->value;
     }
 }

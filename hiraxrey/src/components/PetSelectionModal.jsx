@@ -8,6 +8,8 @@ const PetSelectionModal = ({
   pets,
   selectedPets,
   setSelectedPets,
+  value,
+  setValue
 }) => {
   const [Fly, setFly] = useState(false);
   const [Ride, setRide] = useState(false);
@@ -31,18 +33,36 @@ const PetSelectionModal = ({
     }
   };
 
-  const PetClicked = (pet) => {
-    const uniquePet = {
-      ...pet,
-      Fly,
-      Ride,
-      Normal,
-      Neon,
-      Mega,
-      uniqueid: selectedPets.length + 1,
-    };
-    setSelectedPets((prevPets) => [...prevPets, uniquePet]);
+  const PetClicked = async (pet) => {
+    try {
+      const type = Normal ? 'normal' : (Neon ? 'neon' : (Mega ? 'mega' : ''));
+      const attribute = Fly ? (Ride ? 'fly_ride' : "fly") : Ride ? 'ride' : 'no_potion'
+      const response = await fetch(`http://127.0.0.1:8000/api/pets/${pet.id}/getValue?type=${type}&attribute=${attribute}`);
+      
+      if (!response.ok) {
+        throw new Error("Failed to fetch pet value");
+      }
+      
+      const petValue = await response.json(); // Assuming the API returns JSON data
+
+      setValue(value + petValue)
+      const uniquePet = {
+        ...pet,
+        Fly, // Use API response
+        Ride,
+        Normal,
+        Neon,
+        Mega,
+        uniqueid: selectedPets.length + 1,
+        petValue
+      };
+  
+      setSelectedPets((prevPets) => [...prevPets, uniquePet]);
+    } catch (error) {
+      console.error("Error fetching pet value:", error);
+    }
   };
+  
 
   if (!modal) {
     return null;
@@ -83,7 +103,8 @@ const PetSelectionModal = ({
 
           {/* Images (Scrollable Container) */}
           <div className="mt-4 max-h-96 overflow-y-auto grid grid-cols-4 gap-4">
-            {pets.pets.map((pet) => (
+            {pets.map((pet) => (
+
               <img
                 key={pet.id} // Always provide a unique key when mapping
                 src={`http://127.0.0.1:8000/storage/${pet.image_url}`}
