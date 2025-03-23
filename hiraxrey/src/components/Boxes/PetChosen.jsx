@@ -19,9 +19,10 @@ const PetChosen = ({ selectedPet, setSelectedPets, value, setValue }) => {
     >
       <img
         src={`http://127.0.0.1:8000/storage/${selectedPet.image_url}`}
-        alt=""
+        alt={selectedPet.name ? `Image of ${selectedPet.name}` : "Pet image"}
         className="w-[80%] h-[80%]"
       />
+
       <div className="flex gap-1 absolute bottom-1 right-1">
         {Object.entries({
           Mega,
