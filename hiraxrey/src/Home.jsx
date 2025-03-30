@@ -13,7 +13,7 @@ const Home = () => {
   useEffect(() => {
     const fetchPets = async () => {
       try {
-        const { data } = await axios.get("http://localhost:8000/api/pets");
+        const { data } = await axios.get("/api/pets?paginate=false");
         setPets(data);
       } catch (error) {
         console.error("Error fetching pets:", error);
@@ -40,7 +40,7 @@ const Home = () => {
 
         <Containers pets={pets} setResultValue={setRightValue}/>
       </div>
-      <Chart />
+      {/* <Chart /> */}
     </>
   );
 };

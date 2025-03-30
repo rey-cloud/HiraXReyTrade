@@ -37,7 +37,7 @@ const PetSelectionModal = ({
     try {
       const type = Normal ? 'normal' : (Neon ? 'neon' : (Mega ? 'mega' : ''));
       const attribute = Fly ? (Ride ? 'fly_ride' : "fly") : Ride ? 'ride' : 'no_potion'
-      const response = await fetch(`http://127.0.0.1:8000/api/pets/${pet.id}/getValue?type=${type}&attribute=${attribute}`);
+      const response = await fetch(`/api/pets/${pet.id}/getValue?type=${type}&attribute=${attribute}`);
       
       if (!response.ok) {
         throw new Error("Failed to fetch pet value");
@@ -107,7 +107,7 @@ const PetSelectionModal = ({
 
               <img
                 key={pet.id} // Always provide a unique key when mapping
-                src={`http://127.0.0.1:8000/storage/${pet.image_url}`}
+                src={`/storage/${pet.image_url}`}
                 alt={pet.name} // Add an alt attribute for accessibility
                 className="w-80% h-80% object-cover rounded-md shadow"
                 onClick={() => PetClicked(pet)}
