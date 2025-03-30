@@ -32,7 +32,7 @@ const Home = () => {
       <div className="border-2 border-slate-500 border-opacity-50 flex justify-between h-96 mx-3 rounded-[4px] mt-10 items-center px-4 lg:px-16 lg:max-w-[800px] lg:mx-auto bg-white">
         <Containers pets={pets} setResultValue={setLeftValue}/>
         <div 
-  className={`text-4xl font-bold 
+  className={`text-xl sm:text-4xl font-bold 
     ${leftValue - rightValue > 0 ? "text-red-500" : leftValue - rightValue < 0 ? "text-green-500" : "text-gray-700"}`}
 >
   {Math.abs(leftValue - rightValue)}

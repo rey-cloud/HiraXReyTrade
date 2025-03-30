@@ -40,7 +40,7 @@ const Containers = ({pets, setResultValue}) => {
     <>
       <div className="flex flex-col items-center w-[40%] ">
         <div className="text-center text-3xl font-bold mb-2">{value}</div>
-        <div className="w-full h-60 grid grid-cols-3 overflow-y-auto overflow-x-hidden gap-1 custom-scrollbar">
+        <div className="size-36 sm:size-48 md:size-72 grid grid-cols-3 overflow-y-auto overflow-x-hidden gap-1 custom-scrollbar">
           {Array.from({ length: gridNum }).map((_, index) =>
             index < selectedPets.length ? (
               <PetChosen
