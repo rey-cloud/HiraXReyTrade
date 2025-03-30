@@ -5,18 +5,20 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StorePetRequest extends FormRequest
+class UpdatePetRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true; // Adjust as needed for authorization logic
+        return true;
     }
 
     /**
      * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
@@ -25,10 +27,10 @@ class StorePetRequest extends FormRequest
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('pets')->ignore($this->pet), // Ignore the current pet when checking for uniqueness
+                Rule::unique('pets', 'name')->ignore($this->route('id')),
             ],
             'image_url' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'values' => 'required|json', // Ensure `values` is a valid JSON string
+            'values' => 'required|json',
         ];
     }
 
