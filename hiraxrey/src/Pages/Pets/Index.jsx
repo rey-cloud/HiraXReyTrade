@@ -8,6 +8,11 @@ const Index = () => {
   const [pagination, setPagination] = useState({ current_page: 1, last_page: 1 });
   const [searchTerm, setSearchTerm] = useState('');
 
+  const [isOpen, setIsOpen] = useState(() => {
+    const saved = localStorage.getItem("sidebarOpen");
+    return saved ? JSON.parse(saved) : true;
+  });
+
   const fetchData = async (page = 1, search = '') => {
     try {
       const response = await fetch(`/api/pets?page=${page}&search=${search}`);
@@ -48,8 +53,10 @@ const Index = () => {
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen">
-      <Sidebar />
-      <div className="flex-1 p-4">
+      <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
+      <div className={`transition-all duration-300 flex-1 p-4 ${
+          isOpen ? "md:ml-64" : "ml-20"
+        }`}>
         <div className="mb-4">
           <Link to="/pet/create" className="rounded bg-slate-500 text-white px-4 py-2 inline-block">
             Create New Pet
@@ -73,6 +80,7 @@ const Index = () => {
                 <th className="border px-4 py-2">Image</th>
                 <th className="border px-4 py-2">Name</th>
                 <th className="border px-4 py-2">Values</th>
+                <th className="border px-4 py-2">Type</th>
                 <th className="border px-4 py-2">Actions</th>
               </tr>
             </thead>
@@ -89,14 +97,18 @@ const Index = () => {
                   </td>
                   <td className="border px-4 py-2">{pet.name}</td>
                   <td className="border px-4 py-2">
-                    <select className="w-full border border-gray-300 rounded px-2 py-1 bg-gray-100 text-gray-500">
+                    {pet.type != 'Pet' ? pet.value : <select className="w-full border border-gray-300 rounded px-2 py-1 bg-gray-100 text-gray-500">
                       {pet.pet_values.map((value, idx) => (
                         <option key={idx} disabled>
                           {value.type === 'normal' ? '' : value.type === 'neon' ? '🟢' : value.type === 'mega' ? '🟣' : ''}
                           {value.attribute === 'fly_ride' ? '🔵🔴' : value.attribute === 'fly' ? '🔵' : value.attribute === 'ride' ? '🔴' : ''} - {value.value}
                         </option>
                       ))}
-                    </select>
+                    </select>}
+                    
+                  </td>
+                  <td className="border px-4 py-2">
+                    {pet.type}
                   </td>
                   <td className="border px-4 py-2">
                     <div className="flex flex-wrap gap-1 justify-center">

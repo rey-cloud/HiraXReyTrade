@@ -16,6 +16,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('image_url')->nullable();
+            $table->string('type');
+            $table->decimal('value')->nullable();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->nullable(); // Optional: Add this if you want to track updates but set it manually
         });

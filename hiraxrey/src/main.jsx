@@ -8,7 +8,7 @@ import AppProvider from "./Context/AppContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <Navbar />
+    {/* <Navbar /> */}
     <BrowserRouter>
       <AppProvider>
         <App />

@@ -28,7 +28,8 @@ class StorePetRequest extends FormRequest
                 Rule::unique('pets')->ignore($this->pet), // Ignore the current pet when checking for uniqueness
             ],
             'image_url' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'values' => 'required|json', // Ensure `values` is a valid JSON string
+            'type' => 'required',
+
         ];
     }
 

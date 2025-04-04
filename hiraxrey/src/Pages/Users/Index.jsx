@@ -10,6 +10,11 @@ const Index = () => {
     last_page: 1,
   });
   const [searchTerm, setSearchTerm] = useState('');
+  const [isOpen, setIsOpen] = useState(() => {
+    const saved = localStorage.getItem("sidebarOpen");
+    return saved ? JSON.parse(saved) : true;
+  });
+  
 
   const fetchData = async (page = 1, search = '') => {
     try {
@@ -59,8 +64,10 @@ const Index = () => {
 
   return (
     <div className='flex'>
-      <Sidebar />
-      <div className='p-6 w-full'>
+      <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
+      <div className={`p-6 w-full transition-all duration-300 ${
+        isOpen ? "md:ml-64" : "ml-20"
+      }`}>
         <div className='mb-4'>
           <Link to="/user/create" className="rounded bg-slate-500 text-white px-4 py-2 inline-block">Create New User</Link>
         </div>

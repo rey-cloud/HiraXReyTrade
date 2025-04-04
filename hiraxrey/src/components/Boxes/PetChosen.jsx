@@ -4,37 +4,37 @@ import Ride from "../../assets/images/Ride.png";
 import Neon from "../../assets/images/Neon.png";
 
 const PetChosen = ({ selectedPet, setSelectedPets, value, setValue }) => {
-  // Define the function to remove a pet
   const removePet = (petToRemove) => {
-    setValue(value - petToRemove.petValue)
+    setValue((prev) => parseFloat((prev - petToRemove.petValue).toFixed(2)));
     setSelectedPets((prevPets) =>
       prevPets.filter((pet) => pet.uniqueid !== petToRemove.uniqueid)
     );
   };
+  
 
   return (
     <div
-      className="border-[2px] border-slate-700 flex items-center relative aspect-square"
-      onClick={() => removePet(selectedPet)} // Pass the selectedPet to the removePet function
+      className="border-4 border-pink-300 bg-white rounded-xl shadow-md hover:shadow-lg transition duration-200 relative aspect-square cursor-pointer"
+      onClick={() => removePet(selectedPet)}
     >
       <img
         src={`/storage/${selectedPet.image_url}`}
         alt={selectedPet.name ? `Image of ${selectedPet.name}` : "Pet image"}
-        className="w-[80%] h-[80%]"
+        className="w-[80%] h-[80%] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-md object-contain"
       />
-
-      <div className="flex gap-[1px] absolute bottom-[1px] left-[1px] w-[20%]">
-        {Object.entries({
-          Mega,
-          Neon,
-          Fly,
-          Ride,
-        }).map(([key, src]) =>
-          selectedPet[key] ? (
-            <img key={key} className="" src={src} alt={key} />
-          ) : null
+      {
+        selectedPet.type == "Pet" ? (
+          <div className="flex gap-0.5 absolute bottom-1 left-1 w-[22%]">
+        {Object.entries({ Mega, Neon, Fly, Ride }).map(
+          ([key, src]) =>
+            selectedPet[key] && (
+              <img key={key} src={src} alt={key} className="size-2 sm:size-3 md:size-4" />
+            )
         )}
       </div>
+        ) : ""
+      }
+      
     </div>
   );
 };

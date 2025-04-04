@@ -8,6 +8,13 @@ function PetCreate() {
   const [preview, setPreview] = useState("");
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
+  const [type, setType] = useState("Pet");
+  const [singleValue, setSingleValue] = useState("");
+  const [isOpen, setIsOpen] = useState(() => {
+    const saved = localStorage.getItem("sidebarOpen");
+    return saved ? JSON.parse(saved) : true;
+  });
+  
 
   const presets = [
     { type: "normal", attribute: "no_potion" },
@@ -48,10 +55,17 @@ function PetCreate() {
     const formData = new FormData();
     formData.append("name", name);
     if (image) formData.append("image_url", image);
-    formData.append("values", JSON.stringify(values));
+    if (type === "Pet") {
+      formData.append("values", JSON.stringify(values));
+    } else {
+      formData.append("value", singleValue);
+    }
+    formData.append("type", type);
+
+
 
     try {
-      const response = await fetch("http://localhost:8000/api/pets", {
+      const response = await fetch("/api/pets", {
         method: "POST",
         body: formData,
       });
@@ -74,8 +88,10 @@ function PetCreate() {
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen">
-      <Sidebar />
-      <div className="flex-1 p-4 md:p-6 max-w-2xl mx-auto w-full">
+      <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
+      <div className={`flex-1 p-4 md:p-6 max-w-2xl mx-auto w-full transition-all duration-300 ${
+        isOpen ? "md:ml-64" : "ml-20"
+      }`}>
         <h1 className="text-2xl font-bold mb-4">Create a Pet</h1>
         {message && <div className="mb-4 text-green-600">{message}</div>}
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -109,24 +125,67 @@ function PetCreate() {
             )}
           </div>
 
+          
+
           <div>
-            <label className="block mb-2 font-medium">Values:</label>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {values.map((val, idx) => (
-                <div key={idx} className="grid grid-cols-3 gap-2 items-center">
-                  <div className="p-2 bg-gray-100 rounded text-sm text-gray-700 text-center">{val.type}</div>
-                  <div className="p-2 bg-gray-100 rounded text-sm text-gray-700 text-center">{val.attribute}</div>
-                  <input
-                    type="number"
-                    placeholder="Value"
-                    value={val.value}
-                    required
-                    onChange={(e) => handleValueChange(idx, e.target.value)}
-                    className="p-2 border rounded"
-                  />
-                </div>
-              ))}
+          <div>
+            <label className="block mb-1 font-medium">Type:</label>
+            <select
+              value={type}
+              onChange={(e) => setType(e.target.value)}
+              className="w-full p-2 border rounded"
+            >
+              <option value="Pet">Pet</option>
+              <option value="Pet Wear">Pet Wear</option>
+              <option value="Stroller">Stroller</option>
+              <option value="Vehicle">Vehicle</option>
+              <option value="Toy">Toy</option>
+              <option value="Gift">Gift</option>
+              <option value="Wing">Wing</option>
+              <option value="Sticker">Sticker</option>
+              <option value="Food">Food</option>
+              <option value="Egg">Egg</option>
+            </select>
+          </div>
+
+          {type === "Pet" ? (
+            <div>
+              <label className="block mb-2 font-medium">Values:</label>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {values.map((val, idx) => (
+                  <div key={idx} className="grid grid-cols-3 gap-2 items-center">
+                    <div className="p-2 bg-gray-100 rounded text-sm text-gray-700 text-center">
+                      {val.type}
+                    </div>
+                    <div className="p-2 bg-gray-100 rounded text-sm text-gray-700 text-center">
+                      {val.attribute}
+                    </div>
+                    <input
+                      type="number"
+                      placeholder="Value"
+                      value={val.value}
+                      required
+                      onChange={(e) => handleValueChange(idx, e.target.value)}
+                      className="p-2 border rounded"
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
+          ) : (
+            <div>
+              <label className="block mb-1 font-medium">Value:</label>
+              <input
+                type="number"
+                placeholder="Enter value"
+                value={singleValue}
+                required
+                onChange={(e) => setSingleValue(e.target.value)}
+                className="w-full p-2 border rounded"
+              />
+            </div>
+          )}
+
           </div>
 
           <div className="space-x-2">

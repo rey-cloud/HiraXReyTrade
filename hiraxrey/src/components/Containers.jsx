@@ -5,7 +5,7 @@ import Plus from "./Boxes/Plus";
 import Empty from "./Boxes/Empty";
 import PetChosen from "./Boxes/PetChosen";
 
-const Containers = ({pets, setResultValue}) => {
+const Containers = ({pets, setResultValue, setPets}) => {
 
   const [value, setValue] = useState(0);
   const [gridNum, setGridNums] = useState(9);
@@ -62,6 +62,7 @@ const Containers = ({pets, setResultValue}) => {
         modal={modal}
         setModal={setModal}
         pets={pets}
+        setPets={setPets}
         selectedPets={selectedPets}
         setSelectedPets={setSelectedPets}
         value={value}

@@ -1,14 +1,12 @@
 import plusIcon from "../../assets/images/plus.png";
 
 const Plus = ({ setModal }) => {
-  const handlePlusClick = () => {
-    setModal(true); // Show the modal
-  };
+  const handlePlusClick = () => setModal(true);
 
   return (
     <button
-      className="border-[1px] border-slate-500 flex justify-center items-center shadow-sm shadow-black aspect-square"
-      onClick={() => handlePlusClick()}
+      className="border-4 border-pink-300 bg-pink-100 rounded-xl aspect-square flex justify-center items-center hover:shadow-lg transition-all duration-200 shadow-md"
+      onClick={handlePlusClick}
     >
       <img src={plusIcon} alt="Plus Icon" className="w-1/2 h-1/2" />
     </button>

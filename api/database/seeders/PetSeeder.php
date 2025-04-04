@@ -11,22 +11,23 @@ class PetSeeder extends Seeder
     public function run()
     {
         $pets = [
-            ['name' => 'Dog', 'image_url' => null],
-            ['name' => 'Cat', 'image_url' => null],
-            ['name' => 'Rabbit', 'image_url' => null],
-            ['name' => 'Tiger', 'image_url' => null],
-            ['name' => 'Elephant', 'image_url' => null],
-            ['name' => 'Horse', 'image_url' => null],
-            ['name' => 'Lion', 'image_url' => null],
-            ['name' => 'Fox', 'image_url' => null],
-            ['name' => 'Panda', 'image_url' => null],
-            ['name' => 'Wolf', 'image_url' => null],
+            ['name' => 'Dog', 'image_url' => null, 'type' => 'Pet'],
+            ['name' => 'Cat', 'image_url' => null, 'type' => 'Pet'],
+            ['name' => 'Rabbit', 'image_url' => null, 'type' => 'Pet'],
+            ['name' => 'Tiger', 'image_url' => null, 'type' => 'Pet'],
+            ['name' => 'Elephant', 'image_url' => null, 'type' => 'Pet'],
+            ['name' => 'Horse', 'image_url' => null, 'type' => 'Pet'],
+            ['name' => 'Lion', 'image_url' => null, 'type' => 'Pet'],
+            ['name' => 'Fox', 'image_url' => null, 'type' => 'Pet'],
+            ['name' => 'Panda', 'image_url' => null, 'type' => 'Pet'],
+            ['name' => 'Wolf', 'image_url' => null, 'type' => 'Pet'],
         ];
 
         foreach ($pets as $pet) {
             $petId = DB::table('pets')->insertGetId([
                 'name' => $pet['name'],
                 'image_url' => $pet['image_url'],
+                'type' => $pet['type'],
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

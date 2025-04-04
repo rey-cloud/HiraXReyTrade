@@ -13,6 +13,8 @@ import IndexUsers from "./Pages/Users/Index";
 import CreatePets from "./Pages/Pets/Create";
 import CreateUsers from "./Pages/Users/Create";
 import EditPets from "./Pages/Pets/Edit";
+import EditUsers from "./Pages/Users/Edit";
+import List from "./Pages/Shop/List";
 
 function App() {
   const {user} = useContext(AppContext)
@@ -36,8 +38,14 @@ function App() {
         <Route path="/pet/create" element={<CreatePets />}></Route>
         <Route path="/pet/edit/:id" element={<EditPets />} />
         <Route path="/profile" element={<IndexProfile />}></Route>
+
+        {/* User Route */}
         <Route path="/users" element={<IndexUsers />}></Route>
         <Route path="/user/create" element={<CreateUsers />}></Route>
+        <Route path="/user/edit/:id" element={<EditUsers />}></Route>
+
+        {/* Shop */}
+        <Route path="/shop" element={<List />}></Route>
       </Routes>
     </>
   );
